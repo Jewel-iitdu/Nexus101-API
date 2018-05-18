@@ -82,7 +82,6 @@ class TeacherController extends Controller
      */
     public function show($id)
     {
-        //single article
         $teacher = Teacher::find($id);
         $data['message'] = "Found";
         $data['status'] = 1;
