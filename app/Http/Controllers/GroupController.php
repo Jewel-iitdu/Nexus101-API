@@ -94,9 +94,33 @@ class GroupController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        $group = Group::find($request->id);
+
+        if($group != null){
+            $group = Group::where('id', $request->id)->first();
+            $group->group_name = $request->group_name;
+            $group->semester_year = $request->semester_year;
+
+            if($group->save()){
+
+                $data['message'] = "updated";
+                $data['status'] = 1;
+
+                return json_encode($data);
+                
+
+            }
+            else{
+                
+                $data['message'] = "update failed";
+                $data['status'] = 0;
+
+                return json_encode($data);
+
+            }
+        }
     }
 
     /**

@@ -47,17 +47,20 @@ Route::delete('user/{id}', 'UserController@destroy');
 Route::get('teachers', 'TeacherController@index');
 Route::get('teacher/{email}', 'TeacherController@show');
 Route::post('teacher/store', 'TeacherController@store');
-Route::post('teacher/update', 'TeacherController@update');
+Route::post('teacher/update/', 'TeacherController@update');
 Route::delete('teacher/{email}', 'TeacherController@destroy');
 
 Route::post('admin/store', 'AdminController@store');
-Route::post('admin/update', 'AdminController@update');
+Route::post('admin/update/{email}', 'AdminController@update');
 
 Route::post('group/store','GroupController@store');
+Route::post('group/update/{id}','GroupController@update');
 
 Route::post('course/store','CourseController@store');
 
 Route::post('studymaterial/store','StudyMaterialController@store');
+Route::post('studymaterial/update','StudyMaterialController@update');
+Route::get('studymaterial/show/{id}','StudyMaterialController@show');
 
 Route::post('attendance/store','AttendanceController@store');
 
