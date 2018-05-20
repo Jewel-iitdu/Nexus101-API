@@ -49,3 +49,8 @@ Route::get('teacher/{email}', 'TeacherController@show');
 Route::post('teacher/store', 'TeacherController@store');
 Route::post('teacher/update', 'TeacherController@update');
 Route::delete('teacher/{email}', 'TeacherController@destroy');
+
+Route::post('admin/store', 'AdminController@store');
+Route::post('admin/update', 'AdminController@update');
+
+Route::post('group/store','GroupController@store');

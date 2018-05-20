@@ -16,7 +16,7 @@ class CreateGroupsTable extends Migration
         Schema::create('groups', function (Blueprint $table) {
             $table->increments('id');
             $table->string('group_name')->unique();
-            $table->integer('semester/year')->unique();
+            $table->integer('semester_year')->unique();
 //            $table->string('email');
 
 //            $table->foreign('email')->references('email')->on('admin');

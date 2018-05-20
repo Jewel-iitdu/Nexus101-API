@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\requests;
+use App\Group;
+use App\Http\Resources\Group as GroupResource;
 
 class GroupController extends Controller
 {
@@ -34,7 +37,32 @@ class GroupController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $group = Group::where('id', $request->id)->first();
+
+        if($group == null){
+            $group = new Group;
+            $group->group_name = $request->group_name;
+            $group->semester_year = $request->semester_year;
+
+            if($group->save()){
+
+                $data['message'] = "Inserted";
+                $data['status'] = 1;
+
+                return json_encode($data);
+                
+
+            }
+            else{
+                
+                $data['message'] = "Not Inserted";
+                $data['status'] = 0;
+
+                return json_encode($data);
+
+            }
+        }
+
     }
 
     /**
