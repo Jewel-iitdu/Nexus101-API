@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\requests;
+use App\Course;
+use App\Http\Resources\Course as CourseResource;
 
 class CourseController extends Controller
 {
@@ -34,7 +37,32 @@ class CourseController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $course = Course::where('id', $request->id)->first();
+
+        if($course == null){
+            $course = new Course;
+            $course->course_name = $request->course_name;
+            $course->course_code = $request->course_code;
+            $course->group_id = $request->group_id;
+
+            if($course->save()){
+
+                $data['message'] = "Inserted";
+                $data['status'] = 1;
+
+                return json_encode($data);
+                
+
+            }
+            else{
+                
+                $data['message'] = "Not Inserted";
+                $data['status'] = 0;
+
+                return json_encode($data);
+
+            }
+        }
     }
 
     /**

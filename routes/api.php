@@ -54,3 +54,13 @@ Route::post('admin/store', 'AdminController@store');
 Route::post('admin/update', 'AdminController@update');
 
 Route::post('group/store','GroupController@store');
+
+Route::post('course/store','CourseController@store');
+
+Route::post('studymaterial/store','StudyMaterialController@store');
+
+Route::post('attendance/store','AttendanceController@store');
+
+Route::post('studentgroup/store','StudentGroupController@store');
+
+Route::post('courseteacher/store','CourseTeacherController@store');

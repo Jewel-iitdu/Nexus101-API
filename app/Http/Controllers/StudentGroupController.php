@@ -4,10 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\requests;
-use App\Attendance;
-use App\Http\Resources\Attendance as AttendanceResource;
+use App\StudentGroup;
+use App\Http\Resources\StudentGroup as StudentGroupResource;
 
-class AttendanceController extends Controller
+class StudentGroupController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -37,16 +37,15 @@ class AttendanceController extends Controller
      */
     public function store(Request $request)
     {
-        $attendance = Attendance::where('id', $request->id)->first();
+        $studentgroup = StudentGroup::where('id', $request->id)->first();
 
-        if($attendance == null){
-            $attendance = new Attendance;
-            $attendance->course_id = $request->course_id;
-            $attendance->student_id = $request->student_id;
-            $attendance->isPresent = $request->isPresent;
-            $attendance->date = $request->date;
+        if($studentgroup == null){
+            $studentgroup = new StudentGroup;
+            $studentgroup->student_id = $request->student_id;
+            $studentgroup->group_id = $request->group_id;
+            $studentgroup->active = $request->active;
 
-            if($attendance->save()){
+            if($studentgroup->save()){
 
                 $data['message'] = "Inserted";
                 $data['status'] = 1;
