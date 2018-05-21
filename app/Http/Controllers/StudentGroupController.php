@@ -96,7 +96,32 @@ class StudentGroupController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $studentgroup = StudentGroup::find($request->id);
+
+        if($studentgroup != null){
+            $studentgroup = StudentGroup::where('id', $request->id)->first();
+            $studentgroup->student_id = $request->student_id;
+            $studentgroup->group_id = $request->group_id;
+            $studentgroup->active = $request->active;
+
+            if($studentgroup->save()){
+
+                $data['message'] = "updated";
+                $data['status'] = 1;
+
+                return json_encode($data);
+                
+
+            }
+            else{
+                
+                $data['message'] = "update failed";
+                $data['status'] = 0;
+
+                return json_encode($data);
+
+            }
+        }
     }
 
     /**

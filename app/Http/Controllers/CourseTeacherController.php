@@ -94,9 +94,34 @@ class CourseTeacherController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        $courseteacher = CourseTeacher::find($request->id);
+
+        if($courseteacher != null){
+            $courseteacher = CourseTeacher::where('id', $request->id)->first();
+            $courseteacher->course_id = $request->course_id;
+            $courseteacher->teacher_id = $request->teacher_id;
+            $courseteacher->active = $request->active;
+
+            if($courseteacher->save()){
+
+                $data['message'] = "updated";
+                $data['status'] = 1;
+
+                return json_encode($data);
+                
+
+            }
+            else{
+                
+                $data['message'] = "update failed";
+                $data['status'] = 0;
+
+                return json_encode($data);
+
+            }
+        }
     }
 
     /**

@@ -16,7 +16,13 @@ class CourseController extends Controller
      */
     public function index()
     {
-        //
+        $course = Course::all();
+
+        $data['message'] = "Found";
+        $data['status'] = 1;
+        $data['courses_info'] = $course;
+
+        return json_encode($data);
     }
 
     /**
@@ -43,7 +49,7 @@ class CourseController extends Controller
             $course = new Course;
             $course->course_name = $request->course_name;
             $course->course_code = $request->course_code;
-            $course->group_id = $request->group_id;
+            $course->course_id = $request->course_id;
 
             if($course->save()){
 
@@ -73,7 +79,12 @@ class CourseController extends Controller
      */
     public function show($id)
     {
-        //
+        $course = Course::find($id);
+        $data['message'] = "Found";
+        $data['status'] = 1;
+        $data['courses_info'] = $course;
+
+        return json_encode($data);
     }
 
     /**
@@ -94,9 +105,34 @@ class CourseController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        $course = Course::find($request->id);
+
+        if($course != null){
+            $course = Course::where('id', $request->id)->first();
+            $course->course_name = $request->course_name;
+            $course->course_code = $request->course_code;
+            $course->course_id = $request->course_id;
+
+            if($course->save()){
+
+                $data['message'] = "updated";
+                $data['status'] = 1;
+
+                return json_encode($data);
+                
+
+            }
+            else{
+                
+                $data['message'] = "update failed";
+                $data['status'] = 0;
+
+                return json_encode($data);
+
+            }
+        }
     }
 
     /**

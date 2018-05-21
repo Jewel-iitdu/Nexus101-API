@@ -16,7 +16,13 @@ class GroupController extends Controller
      */
     public function index()
     {
-        //
+        $group = Group::all();
+
+        $data['message'] = "Found";
+        $data['status'] = 1;
+        $data['groups_info'] = $group;
+
+        return json_encode($data);
     }
 
     /**
@@ -73,7 +79,12 @@ class GroupController extends Controller
      */
     public function show($id)
     {
-        //
+        $group = Group::find($id);
+        $data['message'] = "Found";
+        $data['status'] = 1;
+        $data['groups_info'] = $group;
+
+        return json_encode($data);
     }
 
     /**

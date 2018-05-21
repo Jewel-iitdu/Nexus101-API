@@ -16,7 +16,14 @@ class StudyMaterialController extends Controller
      */
     public function index()
     {
-        //
+        $studymaterial = StudyMaterial::all();
+
+        $data['message'] = "Found";
+        $data['status'] = 1;
+        $data['file_info'] = $studymaterial;
+
+        return json_encode($data);
+
     }
 
     /**

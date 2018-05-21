@@ -55,12 +55,15 @@ Route::post('admin/update/{email}', 'AdminController@update');
 
 Route::post('group/store','GroupController@store');
 Route::post('group/update/{id}','GroupController@update');
+Route::get('group/index','GroupController@index');
+Route::get('group/show/{id}','GroupController@show');
 
 Route::post('course/store','CourseController@store');
 
 Route::post('studymaterial/store','StudyMaterialController@store');
 Route::post('studymaterial/update','StudyMaterialController@update');
 Route::get('studymaterial/show/{id}','StudyMaterialController@show');
+Route::get('studymaterial/index','StudyMaterialController@index');
 
 Route::post('attendance/store','AttendanceController@store');
 

@@ -16,7 +16,13 @@ class AttendanceController extends Controller
      */
     public function index()
     {
-        //
+        $attendance = Attendance::all();
+
+        $data['message'] = "Found";
+        $data['status'] = 1;
+        $data['attendances_info'] = $attendance;
+
+        return json_encode($data);
     }
 
     /**
@@ -74,7 +80,12 @@ class AttendanceController extends Controller
      */
     public function show($id)
     {
-        //
+        $attendance = Attendance::find($id);
+        $data['message'] = "Found";
+        $data['status'] = 1;
+        $data['attendances_info'] = $attendance;
+
+        return json_encode($data);
     }
 
     /**
@@ -95,9 +106,35 @@ class AttendanceController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        $attendance = Attendance::find($request->id);
+
+        if($attendance != null){
+            $attendance = Attendance::where('id', $request->id)->first();
+            $attendance->course_id = $request->course_id;
+            $attendance->student_id = $request->student_id;
+            $attendance->isPresent = $request->isPresent;
+            $attendance->date = $request->date;
+
+            if($attendance->save()){
+
+                $data['message'] = "updated";
+                $data['status'] = 1;
+
+                return json_encode($data);
+                
+
+            }
+            else{
+                
+                $data['message'] = "update failed";
+                $data['status'] = 0;
+
+                return json_encode($data);
+
+            }
+        }
     }
 
     /**
