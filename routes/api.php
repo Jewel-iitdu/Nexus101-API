@@ -59,6 +59,9 @@ Route::get('group/index','GroupController@index');
 Route::get('group/show/{id}','GroupController@show');
 
 Route::post('course/store','CourseController@store');
+Route::post('course/update','CourseController@update');
+Route::get('course/show/{id}','CourseController@show');
+Route::get('course/index','CourseController@index');
 
 Route::post('studymaterial/store','StudyMaterialController@store');
 Route::post('studymaterial/update','StudyMaterialController@update');
@@ -66,7 +69,16 @@ Route::get('studymaterial/show/{id}','StudyMaterialController@show');
 Route::get('studymaterial/index','StudyMaterialController@index');
 
 Route::post('attendance/store','AttendanceController@store');
+Route::post('attendance/update','AttendanceController@update');
+Route::get('attendance/show/{id}','AttendanceController@show');
+Route::get('attendance/index','AttendanceController@index');
 
 Route::post('studentgroup/store','StudentGroupController@store');
+Route::post('studentgroup/update','StudentGroupController@update');
+Route::get('studentgroup/show/{id}','StudentGroupController@show');
+Route::get('studentgroup/index','StudentGroupController@index');
 
 Route::post('courseteacher/store','CourseTeacherController@store');
+Route::post('courseteacher/update','CourseTeacherController@update');
+Route::get('courseteacher/show/{id}','CourseTeacherController@show');
+Route::get('courseteacher/index','CourseTeacherController@index');
