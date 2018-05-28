@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\User;
 use App\Student;
+use App\StudentGroup;
 
 class StudentController extends Controller
 {
@@ -66,11 +67,13 @@ class StudentController extends Controller
                 $student->session =$request->session;
                 $student->attached_hall= $request->attached_hall;
 
-                if($student->save()){
+                if($studentgroup->save()){
                     $data['message'] = "Inserted";
                     $data['status'] = 1;
 
                     return json_encode($data);
+
+                
                 }
 
             }

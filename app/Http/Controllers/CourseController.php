@@ -50,6 +50,7 @@ class CourseController extends Controller
             $course->course_name = $request->course_name;
             $course->course_code = $request->course_code;
             $course->course_id = $request->course_id;
+            $course->group_id = $request->group_id;
 
             if($course->save()){
 
@@ -105,6 +106,15 @@ class CourseController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
+     public function getCourseByGroupId(Request $request){
+         $course = Course::find($request->group_id);
+
+         if($course != null){
+
+         }
+     }
+
     public function update(Request $request)
     {
         $course = Course::find($request->id);
@@ -114,6 +124,7 @@ class CourseController extends Controller
             $course->course_name = $request->course_name;
             $course->course_code = $request->course_code;
             $course->course_id = $request->course_id;
+            $course->group_id = $request->group_id;
 
             if($course->save()){
 
