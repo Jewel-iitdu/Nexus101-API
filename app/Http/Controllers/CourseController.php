@@ -107,12 +107,15 @@ class CourseController extends Controller
      */
 
      public function getCourseByGroupId(Request $request){
-         $course = Course::find($request->group_id);
-
-         if($course != null){
-
-         }
-     }
+        $courses = Course::where('group_id',$request->group_id)->get();
+ 
+        $data['message'] = "Found";
+        $data['status'] = 1;
+        foreach ($courses as $key=>$course) {
+            $data['courses_info_by_group'][$key] = $course;
+        }
+        return json_encode($data);
+    }
 
     public function update(Request $request)
     {

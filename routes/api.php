@@ -62,6 +62,7 @@ Route::post('course/store','CourseController@store');
 Route::post('course/update','CourseController@update');
 Route::get('course/show/{id}','CourseController@show');
 Route::get('course/index','CourseController@index');
+Route::post('course/getCourseByGroupId','CourseController@getCourseByGroupId');
 
 Route::post('studymaterial/store','StudyMaterialController@store');
 Route::post('studymaterial/update','StudyMaterialController@update');
