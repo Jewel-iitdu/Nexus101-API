@@ -49,7 +49,6 @@ class CourseController extends Controller
             $course = new Course;
             $course->course_name = $request->course_name;
             $course->course_code = $request->course_code;
-            $course->course_id = $request->course_id;
             $course->group_id = $request->group_id;
 
             if($course->save()){
