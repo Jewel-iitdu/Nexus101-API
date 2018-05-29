@@ -20,7 +20,7 @@ class CreateAttendancesTable extends Migration
             $table->integer('student_id');
             //$table->foreign('student_id')->references('id')->on('students')->onDelete('cascade');
             $table->boolean('isPresent');
-            $table->date('date');
+            $table->string('date');
             $table->timestamps();
         });
     }

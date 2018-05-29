@@ -99,6 +99,27 @@ class AttendanceController extends Controller
         //
     }
 
+    public function getAttendancelistByStudentId(Request $request){
+        $attendances = Attendance::where('student_id', $request->student_id)->where('course_id', $request->course_id)->get();
+
+        if($attendances != null){
+            $data['message'] = "Found";
+            $data['status'] = 1;
+            $data['attendances_info'] = $attendances;
+
+            return json_encode($data);
+        }
+
+        else{
+            $data['message'] = "Not Found";
+            $data['status'] = 0;
+
+            return json_encode($data);
+        }
+
+
+    }
+
     /**
      * Update the specified resource in storage.
      *

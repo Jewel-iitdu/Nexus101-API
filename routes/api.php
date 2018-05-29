@@ -73,6 +73,7 @@ Route::post('attendance/store','AttendanceController@store');
 Route::post('attendance/update','AttendanceController@update');
 Route::get('attendance/show/{id}','AttendanceController@show');
 Route::get('attendance/index','AttendanceController@index');
+Route::post('attendance/getAttendancelistByStudentId','AttendanceController@getAttendancelistByStudentId');
 
 Route::post('studentgroup/store','StudentGroupController@store');
 Route::post('studentgroup/update','StudentGroupController@update');

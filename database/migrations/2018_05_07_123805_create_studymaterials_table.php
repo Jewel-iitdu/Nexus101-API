@@ -18,8 +18,8 @@ class CreateStudymaterialsTable extends Migration
             $table->string('file_name');
             $table->integer('course_id');
             //$table->foreign('course_id')->references('id')->on('courses')->onDelete('cascade');
-            $table->date('upload_date');
-            $table->date('remove_date');
+            $table->string('upload_date');
+            $table->string('remove_date');
             $table->timestamps();
         });
     }
