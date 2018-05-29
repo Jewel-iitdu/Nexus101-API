@@ -78,8 +78,10 @@ Route::post('studentgroup/store','StudentGroupController@store');
 Route::post('studentgroup/update','StudentGroupController@update');
 Route::get('studentgroup/show/{id}','StudentGroupController@show');
 Route::get('studentgroup/index','StudentGroupController@index');
+Route::post('studentgroup/getStudentByGroupId','StudentGroupController@getStudentByGroupId');
 
 Route::post('courseteacher/store','CourseTeacherController@store');
 Route::post('courseteacher/update','CourseTeacherController@update');
 Route::get('courseteacher/show/{id}','CourseTeacherController@show');
 Route::get('courseteacher/index','CourseTeacherController@index');
+Route::post('courseteacher/getCourseByTeacherId','CourseTeacherController@getCourseByTeacherId');

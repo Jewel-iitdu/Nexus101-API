@@ -71,10 +71,19 @@ class CourseTeacherController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
-    {
-        //
+    
+    
+    public function getCourseByTeacherId(Request $request){
+        $courses = CourseTeacher::where('teacher_id',$request->teacher_id)->get();
+
+        $data['message'] = "Found";
+        $data['status'] = 1;
+        foreach ($courses as $key=>$course) {
+            $data['courses_info_by_teacher'][$key] = $course;
+        }
+        return json_encode($data);
     }
+
 
     /**
      * Show the form for editing the specified resource.

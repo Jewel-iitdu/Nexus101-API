@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Http\requests;
 use App\StudentGroup;
 use App\Http\Resources\StudentGroup as StudentGroupResource;
+use App\Student;
+use App\User;
 
 class StudentGroupController extends Controller
 {
@@ -75,6 +77,24 @@ class StudentGroupController extends Controller
     {
         //
     }
+    
+    public function getStudentByGroupId(Request $request){
+        $students = StudentGroup::where('group_id',$request->group_id)->get();
+
+        if($students != null){
+            
+            $data['message'] = "Found";
+            $data['status'] = 1;
+
+            foreach ($students as $key=>$student) {
+                $data['student'][$key]['student_info'] = Student::find($student->student_id);
+             //   $data['student'][$key]['user_info'] = User::find($student->$student_id);
+            }
+            return json_encode($data);
+        }
+        
+    }
+
 
     /**
      * Show the form for editing the specified resource.

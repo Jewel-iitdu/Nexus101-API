@@ -108,13 +108,25 @@ class CourseController extends Controller
 
      public function getCourseByGroupId(Request $request){
         $courses = Course::where('group_id',$request->group_id)->get();
- 
-        $data['message'] = "Found";
-        $data['status'] = 1;
-        foreach ($courses as $key=>$course) {
-            $data['courses_info_by_group'][$key] = $course;
+        
+        if($courses != null){
+            $data['message'] = "Found";
+            $data['status'] = 1;
+            foreach ($courses as $key=>$course) {
+                $data['courses_info_by_group'][$key] = $course;
+            }
+            
+            return json_encode($data);
         }
-        return json_encode($data);
+        else{
+            $data['message'] = "Not Found";
+            $data['status'] = 0;
+
+            return json_encode($data);
+        }
+            
+        
+        
     }
 
     public function update(Request $request)
