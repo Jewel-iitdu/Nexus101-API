@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\requests;
 use App\Studymaterial;
 use App\Http\Resources\Studymaterial as StudymaterialResource;
+use App\Course;
 
 class StudyMaterialController extends Controller
 {
@@ -20,7 +21,7 @@ class StudyMaterialController extends Controller
 
         $data['message'] = "Found";
         $data['status'] = 1;
-        $data['file_info'] = $studymaterial;
+        $data['studyMaterial_info'] = $studymaterial;
 
         return json_encode($data);
 
@@ -73,13 +74,33 @@ class StudyMaterialController extends Controller
         }
     }
 
+    public function getFilesById(Request $request){
+        $files = StudyMaterial::where('course_id', $request->course_id)->get();
+
+        if($files != null){
+            $data['message'] = "Found";
+            $data['status'] = 1;
+            foreach ($files as $key=>$file) {
+            $data['files_info'][$key]['files'] = $file;
+            $data['files_info'][$key]['courses'] = Course::find($file->course_id);
+        }
+        return json_encode($data);
+        }
+
+        else{
+            $data['message'] = "Not Found";
+            $data['status'] = 0;
+
+            return json_encode($data);
+        }
+    }
     /**
      * Display the specified resource.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+      public function show($id)
     {
         $studymaterial = StudyMaterial::find($id);
         $data['message'] = "Found";

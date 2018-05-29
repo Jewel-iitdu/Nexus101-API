@@ -105,7 +105,7 @@ class AttendanceController extends Controller
         if($attendances != null){
             $data['message'] = "Found";
             $data['status'] = 1;
-            $data['attendances_info'] = $attendances;
+            $data['student_attendances_info'] = $attendances;
 
             return json_encode($data);
         }

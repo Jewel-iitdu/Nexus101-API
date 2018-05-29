@@ -68,6 +68,7 @@ Route::post('studymaterial/store','StudyMaterialController@store');
 Route::post('studymaterial/update','StudyMaterialController@update');
 Route::get('studymaterial/show/{id}','StudyMaterialController@show');
 Route::get('studymaterial/index','StudyMaterialController@index');
+Route::post('studymaterial/getFilesById','StudyMaterialController@getFilesById');
 
 Route::post('attendance/store','AttendanceController@store');
 Route::post('attendance/update','AttendanceController@update');
