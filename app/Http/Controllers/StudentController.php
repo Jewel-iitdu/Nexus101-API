@@ -67,7 +67,7 @@ class StudentController extends Controller
                 $student->session =$request->session;
                 $student->attached_hall= $request->attached_hall;
 
-                if($studentgroup->save()){
+                if($student->save()){
                     $data['message'] = "Inserted";
                     $data['status'] = 1;
 

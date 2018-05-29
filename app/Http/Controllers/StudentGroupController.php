@@ -87,6 +87,7 @@ class StudentGroupController extends Controller
             $data['status'] = 1;
 
             foreach ($students as $key=>$student) {
+                $data['student'][$key]['student_status'] = $student;
                 $data['student'][$key]['student_info'] = Student::find($student->student_id);
              //   $data['student'][$key]['user_info'] = User::find($student->$student_id);
             }

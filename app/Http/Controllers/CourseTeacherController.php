@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\requests;
 use App\CourseTeacher;
 use App\Http\Resources\CourseTeacher as CourseTeacherResource;
+use App\Course;
 
 class CourseTeacherController extends Controller
 {
@@ -79,7 +80,8 @@ class CourseTeacherController extends Controller
         $data['message'] = "Found";
         $data['status'] = 1;
         foreach ($courses as $key=>$course) {
-            $data['courses_info_by_teacher'][$key] = $course;
+            $data['courses_info_by_teacher'][$key]['course_status'] = $course;
+            $data['courses_info_by_teacher'][$key]['course_info'] = Course::find($course->course_id);
         }
         return json_encode($data);
     }
