@@ -55,6 +55,7 @@ class StudentController extends Controller
             $user->email = $request->email;
             $user->password = bcrypt($request->password);
             $user->user_type = "Student";
+            $user->phone_number = $request->phone_number;
 
             if($user->save()){
                 $student = new Student;

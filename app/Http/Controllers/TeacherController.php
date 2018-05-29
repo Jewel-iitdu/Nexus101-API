@@ -50,6 +50,7 @@ class TeacherController extends Controller
             $user->email = $request->email;
             $user->password = bcrypt($request->password);
             $user->user_type = "Teacher";
+            $user->phone_number = $request->phone_number;
 
             if($user->save()){
                 $teacher = new Teacher;

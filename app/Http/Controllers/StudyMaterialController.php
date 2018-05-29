@@ -76,15 +76,11 @@ class StudyMaterialController extends Controller
 
     public function getFilesById(Request $request){
         $files = StudyMaterial::where('course_id', $request->course_id)->get();
-
-        if($files != null){
+        if(count($files) > 0){
             $data['message'] = "Found";
             $data['status'] = 1;
-            foreach ($files as $key=>$file) {
-            $data['files_info'][$key]['files'] = $file;
-            $data['files_info'][$key]['courses'] = Course::find($file->course_id);
-        }
-        return json_encode($data);
+            $data['file_info'] = $files;
+            return json_encode($data);
         }
 
         else{

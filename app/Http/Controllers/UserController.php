@@ -29,7 +29,7 @@ class UserController extends Controller
         if($user == null){
             $data['message'] = "Login failed";
             $data['status'] = 0;
-            $data['user'] = null;
+            $data['user_info'] = null;
 
             return json_encode($data);
         }
@@ -37,14 +37,14 @@ class UserController extends Controller
             if(Hash::check($request->password, $user->password)){
                 $data['message'] = "Login successfull";
                 $data['status'] = 1;
-                $data['user'] = $user;
+                $data['user_info'] = $user;
 
                 return json_encode($data);
             }
             else{
                 $data['message'] = "Invalid Password";
                 $data['status'] = 0;
-                $data['user'] = null;
+                $data['user_info'] = null;
 
                 return json_encode($data);
             }

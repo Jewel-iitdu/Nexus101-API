@@ -75,14 +75,11 @@ class CourseTeacherController extends Controller
     
     
     public function getCourseByTeacherId(Request $request){
-        $courses = CourseTeacher::where('teacher_id',$request->teacher_id)->get();
+        $courses = CourseTeacher::where('teacher_id',$request->teacher_id)->where('active', 1)->get();
 
         $data['message'] = "Found";
         $data['status'] = 1;
-        foreach ($courses as $key=>$course) {
-            $data['courses_info_by_teacher'][$key]['course_status'] = $course;
-            $data['courses_info_by_teacher'][$key]['course_info'] = Course::find($course->course_id);
-        }
+        $data['course_info']= $courses;
         return json_encode($data);
     }
 

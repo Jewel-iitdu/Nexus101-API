@@ -79,21 +79,26 @@ class StudentGroupController extends Controller
     }
     
     public function getStudentByGroupId(Request $request){
-        $students = StudentGroup::where('group_id',$request->group_id)->get();
+        $studentgroups = StudentGroup::where('group_id', $request->group_id)->where('active', 1)->get();
+        //dd($studentgroups);
 
-        if($students != null){
+        if(count($studentgroups) > 0){
             
             $data['message'] = "Found";
             $data['status'] = 1;
 
-            foreach ($students as $key=>$student) {
-                $data['student'][$key]['student_status'] = $student;
-                $data['student'][$key]['student_info'] = Student::find($student->student_id);
-             //   $data['student'][$key]['user_info'] = User::find($student->$student_id);
+            foreach ($studentgroups as $key => $studentgroup) {
+                $student = Student::find($studentgroup->student_id);
+                $data['student'][$key]['student_info'] = $student;
+                $data['student'][$key]['user_info'] = User::find($student->user_id);
             }
+            
             return json_encode($data);
         }
-        
+
+        $data['message'] = "Not Found";
+        $data['status'] = 0;
+        return json_encode($data);
     }
 
 
