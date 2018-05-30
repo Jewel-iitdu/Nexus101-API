@@ -128,7 +128,7 @@ class StudyMaterialController extends Controller
     {
         $studymaterial = StudyMaterial::find($request->id);
 
-        if($studymaterial != null){
+        if(count($studymaterial) > 0){
             $studymaterial = StudyMaterial::where('id', $request->id)->first();
 //            $studymaterial = Studymaterial;
             $studymaterial->file_name = $request->file_name;

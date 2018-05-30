@@ -162,7 +162,7 @@ class AttendanceController extends Controller
     {
         $attendance = Attendance::find($request->id);
 
-        if($attendance != null){
+        if(count($attendance) > 0){
             $attendance = Attendance::where('id', $request->id)->first();
             $attendance->course_id = $request->course_id;
             $attendance->student_id = $request->student_id;

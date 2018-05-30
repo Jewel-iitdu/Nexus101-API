@@ -18,13 +18,19 @@ class StudentController extends Controller
     {
         $students = Student::all();
 
-        $data['message'] = "Found";
-        $data['status'] = 1;
+        if(count($students) > 0){
+            $data['message'] = "Found";
+            $data['status'] = 1;
 
-        foreach($students as $key=>$student){
-            $data['student'][$key]['student_info'] = $student;
-            $data['student'][$key]['user_info'] = User::find($student->user_id);   
+            foreach($students as $key=>$student){
+                $data['student'][$key]['student_info'] = $student;
+                $data['student'][$key]['user_info'] = User::find($student->user_id);   
         }
+
+        return json_encode($data);
+        }
+        $data['message'] = "Not Found";
+        $data['status'] = 0;
 
         return json_encode($data);
     }
@@ -126,7 +132,7 @@ class StudentController extends Controller
     {
         $student = Student::find($request->id);
 
-        if($student != null){
+        if(count($student) > 0){
 
             $student->blood_group = $request->blood_group;
             $student->address = $request->address;
@@ -139,6 +145,7 @@ class StudentController extends Controller
             if($student->save()){
                 $user = User::where('id', $student->user_id)->first();
                 $user->name = $request->name;
+                $user->phone_number =$request->phone_number;
 
                 if($user->save()){
                     $data['message'] = "Updated";

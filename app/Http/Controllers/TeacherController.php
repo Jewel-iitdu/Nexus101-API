@@ -20,13 +20,20 @@ class TeacherController extends Controller
     {
         $teachers = Teacher::all();
 
-        $data['message'] = "Found";
-        $data['status'] = 1;
+        if(count($teachers) > 0){
+            $data['message'] = "Found";
+            $data['status'] = 1;
 
-        foreach($teachers as $key=>$teacher){
-            $data['teacher'][$key]['teacher_info'] = $teacher;
-            $data['teacher'][$key]['user_info'] = User::find($teacher->user_id);   
+            foreach($teachers as $key=>$teacher){
+                $data['teacher'][$key]['teacher_info'] = $teacher;
+                $data['teacher'][$key]['user_info'] = User::find($teacher->user_id);   
+            }
+
+            return json_encode($data);    
         }
+
+        $data['message'] = "Not Found";
+        $data['status'] = 0;
 
         return json_encode($data);
     }
@@ -97,7 +104,7 @@ class TeacherController extends Controller
     {
         $teacher = Teacher::find($request->id);
 
-        if($teacher != null){
+        if(count($teacher) > 0){
 
             $teacher->blood_group = $request->blood_group;
             $teacher->designation = $request->designation;
@@ -105,6 +112,7 @@ class TeacherController extends Controller
             if($teacher->save()){
                 $user = User::where('id', $teacher->user_id)->first();
                 $user->name = $request->name;
+                $user->phone_number =$request->phone_number;
 
                 if($user->save()){
                     $data['message'] = "Updated";

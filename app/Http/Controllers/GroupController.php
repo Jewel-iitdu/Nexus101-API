@@ -18,11 +18,20 @@ class GroupController extends Controller
     {
         $group = Group::all();
 
-        $data['message'] = "Found";
+        if(count($group) > 0){
+            $data['message'] = "Found";
         $data['status'] = 1;
-        $data['groups_info'] = $group;
+        $data['group_info'] = $group;
 
         return json_encode($data);
+        }
+        else{
+            $data['message'] = "Not Found";
+            $data['status'] = 0;
+
+            return json_encode($data);
+        }
+        
     }
 
     /**
@@ -43,7 +52,7 @@ class GroupController extends Controller
      */
     public function store(Request $request)
     {
-        $group = Group::where('id', $request->id)->first();
+        $group = Group::where('group_name', $request->group_name)->first();
 
         if($group == null){
             $group = new Group;
@@ -56,19 +65,13 @@ class GroupController extends Controller
                 $data['status'] = 1;
 
                 return json_encode($data);
-                
-
-            }
-            else{
-                
-                $data['message'] = "Not Inserted";
-                $data['status'] = 0;
-
-                return json_encode($data);
-
             }
         }
 
+        $data['message'] = "Not Inserted";
+        $data['status'] = 0;
+
+        return json_encode($data);
     }
 
     /**
@@ -109,7 +112,7 @@ class GroupController extends Controller
     {
         $group = Group::find($request->id);
 
-        if($group != null){
+        if(count($group) > 0){
             $group = Group::where('id', $request->id)->first();
             $group->group_name = $request->group_name;
             $group->semester_year = $request->semester_year;

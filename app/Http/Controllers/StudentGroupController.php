@@ -124,7 +124,7 @@ class StudentGroupController extends Controller
     {
         $studentgroup = StudentGroup::find($request->id);
 
-        if($studentgroup != null){
+        if(count($studentgroup) > 0){
             $studentgroup = StudentGroup::where('id', $request->id)->first();
             $studentgroup->student_id = $request->student_id;
             $studentgroup->group_id = $request->group_id;
