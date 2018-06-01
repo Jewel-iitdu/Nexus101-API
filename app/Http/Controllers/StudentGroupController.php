@@ -8,6 +8,7 @@ use App\StudentGroup;
 use App\Http\Resources\StudentGroup as StudentGroupResource;
 use App\Student;
 use App\User;
+use App\Group;
 
 class StudentGroupController extends Controller
 {
@@ -39,13 +40,13 @@ class StudentGroupController extends Controller
      */
     public function store(Request $request)
     {
-        $studentgroup = StudentGroup::where('id', $request->id)->first();
+        $studentgroup = StudentGroup::where('student_id', $request->student_id)->first();
 
         if($studentgroup == null){
             $studentgroup = new StudentGroup;
             $studentgroup->student_id = $request->student_id;
             $studentgroup->group_id = $request->group_id;
-            $studentgroup->active = $request->active;
+            $studentgroup->active = 1;
 
             if($studentgroup->save()){
 
@@ -56,15 +57,12 @@ class StudentGroupController extends Controller
                 
 
             }
-            else{
-                
-                $data['message'] = "Not Inserted";
-                $data['status'] = 0;
-
-                return json_encode($data);
-
-            }
         }
+        
+        $data['message'] = "Not Inserted";
+        $data['status'] = 0;
+
+        return json_encode($data);
     }
 
     /**
@@ -73,9 +71,22 @@ class StudentGroupController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Request $request)
     {
-        //
+        $studentgroup = StudentGroup::where('student_id', $request->student_id)->where('active', 1)->first();
+        if($studentgroup != null){
+            $group = Group::find($studentgroup->group_id);
+            
+            $data['message'] = "Found";
+            $data['status'] = 1;
+            $data['group_info'] = $group;
+            
+            return json_encode($data);
+        }
+        $data['message'] = "Not Found";
+        $data['status'] = 0;
+        
+        return json_encode($data);
     }
     
     public function getStudentByGroupId(Request $request){
@@ -124,7 +135,7 @@ class StudentGroupController extends Controller
     {
         $studentgroup = StudentGroup::find($request->id);
 
-        if(count($studentgroup) > 0){
+        if($studentgroup != null){
             $studentgroup = StudentGroup::where('id', $request->id)->first();
             $studentgroup->student_id = $request->student_id;
             $studentgroup->group_id = $request->group_id;

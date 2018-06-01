@@ -98,13 +98,13 @@ class StudentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Request $request)
     {
-        $student = Student::find($id);
+        $student = Student::find($request->student_id);
         $data['message'] = "Found";
         $data['status'] = 1;
-        $data['student']['student_info'] = $student;
-        $data['student']['user_info'] = User::find($student->user_id);
+        $data['student'][0]['student_info'] = $student;
+        $data['student'][0]['user_info'] = User::find($student->user_id);
 
         return json_encode($data);
         
@@ -132,7 +132,7 @@ class StudentController extends Controller
     {
         $student = Student::find($request->id);
 
-        if(count($student) > 0){
+        if($student != null ){
 
             $student->blood_group = $request->blood_group;
             $student->address = $request->address;

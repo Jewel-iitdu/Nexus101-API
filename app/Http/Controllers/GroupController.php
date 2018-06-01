@@ -112,7 +112,7 @@ class GroupController extends Controller
     {
         $group = Group::find($request->id);
 
-        if(count($group) > 0){
+        if($group != null){
             $group = Group::where('id', $request->id)->first();
             $group->group_name = $request->group_name;
             $group->semester_year = $request->semester_year;

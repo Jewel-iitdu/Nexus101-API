@@ -7,6 +7,9 @@ use App\Http\requests;
 use App\User;
 use App\Http\Resources\User as UserResource;
 use Hash;
+use App\Student;
+use App\Admin;
+use App\Teacher;
 
 
 class UserController extends Controller
@@ -38,6 +41,15 @@ class UserController extends Controller
                 $data['message'] = "Login successfull";
                 $data['status'] = 1;
                 $data['user_info'] = $user;
+                if($user->user_type == "Student"){
+                    $data['id'] = Student::where('user_id', $user->id)->first()->id;
+                }
+                else if($user->user_type == "Teacher"){
+                    $data['id'] = Teacher::where('user_id', $user->id)->first()->id;
+                }
+                else{
+                    $data['id'] = Admin::where('user_id', $user->id)->first()->id;
+                }
 
                 return json_encode($data);
             }

@@ -126,7 +126,7 @@ class CourseController extends Controller
             $data['course_info'] = $courses;
             return json_encode($data);
         }
-
+        
         $data['message'] = "Not Found";
         $data['status'] = 0;
 
@@ -152,7 +152,7 @@ class CourseController extends Controller
     {
         $course = Course::find($request->id);
 
-        if(course($course) > 0){
+        if($course != null){
             $course = Course::where('id', $request->id)->first();
             $course->course_name = $request->course_name;
             $course->course_code = $request->course_code;

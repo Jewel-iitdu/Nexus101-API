@@ -103,12 +103,12 @@ class AttendanceController extends Controller
     public function getAttendancelistByStudentId(Request $request){
         $attendances = Attendance::where('student_id', $request->student_id)->where('course_id', $request->course_id)->get();
 
-        if(count($attendances) > 0){
+        if(count($attendances) >0){
             $data['message'] = "Found";
             $data['status'] = 1;
             foreach($attendances as $key=>$attendance){
-                $data['student_attendances_info'][$key]['attendance'] = $attendance;
-                $data['student_attendances_info'][$key]['Course'] = Course::find($attendance->course_id);
+                $data['attendance'][$key]['attendance_info'] = $attendance;
+                $data['attendance'][$key]['course_info'] = Course::find($attendance->course_id);
             }
             
 
@@ -125,32 +125,6 @@ class AttendanceController extends Controller
 
     }
 
-    public function storeAttendance(Request $request){
-        for($i=0; $i<count($request->student_id); $i++){
-            $attendance = Attendance::where('course_id', $request->course_id)->where('student_id', $request->student_id)->where('date', $request->date)->get();
-            if(count($attendance) < 1){
-                $attendance = new Attendance;
-                $attendance->course_id = $request->course_id;
-                $attendance->student_id = $request->student_id[$i];
-                $attendance->isPresent = $request->isPresent[$i];
-                $attendance->date = $request->date;
-                $attendance->save();
-            }
-            else{
-                $data['message'] = "Already Exists";
-                $data['status'] = 0;
-
-                return json_encode($data);
-            }
-            
-        }
-
-        $data['message'] = "Inserted";
-        $data['status'] = 1;
-
-        return json_encode($data);
-    }
-
     /**
      * Update the specified resource in storage.
      *
@@ -162,7 +136,7 @@ class AttendanceController extends Controller
     {
         $attendance = Attendance::find($request->id);
 
-        if(count($attendance) > 0){
+        if($attendance != null){
             $attendance = Attendance::where('id', $request->id)->first();
             $attendance->course_id = $request->course_id;
             $attendance->student_id = $request->student_id;

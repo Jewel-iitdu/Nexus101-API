@@ -88,13 +88,13 @@ class TeacherController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Request $request)
     {
-        $teacher = Teacher::find($id);
+        $teacher = Teacher::find($request->teacher_id);
         $data['message'] = "Found";
         $data['status'] = 1;
-        $data['teacher']['teacher_info'] = $teacher;
-        $data['teacher']['user_info'] = User::find($teacher->user_id);
+        $data['teacher'][0]['teacher_info'] = $teacher;
+        $data['teacher'][0]['user_info'] = User::find($teacher->user_id);
 
         return json_encode($data);
     }
@@ -104,7 +104,7 @@ class TeacherController extends Controller
     {
         $teacher = Teacher::find($request->id);
 
-        if(count($teacher) > 0){
+        if($teacher != null){
 
             $teacher->blood_group = $request->blood_group;
             $teacher->designation = $request->designation;

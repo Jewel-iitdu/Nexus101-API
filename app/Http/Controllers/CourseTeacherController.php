@@ -38,13 +38,13 @@ class CourseTeacherController extends Controller
      */
     public function store(Request $request)
     {
-        $courseteacher = CourseTeacher::where('id', $request->id)->first();
+        $courseteacher = CourseTeacher::where('course_id', $request->course_id)->where('teacher_id', $request->teacher_id)->first();
 
         if($courseteacher == null){
             $courseteacher = new CourseTeacher;
             $courseteacher->course_id = $request->course_id;
             $courseteacher->teacher_id = $request->teacher_id;
-            $courseteacher->active = $request->active;
+            $courseteacher->active = 1;
 
             if($courseteacher->save()){
 
@@ -55,15 +55,12 @@ class CourseTeacherController extends Controller
                 
 
             }
-            else{
-                
-                $data['message'] = "Not Inserted";
-                $data['status'] = 0;
-
-                return json_encode($data);
-
-            }
         }
+        
+        $data['message'] = "Not Inserted";
+        $data['status'] = 0;
+
+        return json_encode($data);
     }
 
     /**
@@ -75,12 +72,26 @@ class CourseTeacherController extends Controller
     
     
     public function getCourseByTeacherId(Request $request){
-        $courses = CourseTeacher::where('teacher_id',$request->teacher_id)->where('active', 1)->get();
+        
+        $coursesteacher = CourseTeacher::where('teacher_id', $request->teacher_id)->where('active', 1)->get();
 
-        $data['message'] = "Found";
-        $data['status'] = 1;
-        $data['course_info']= $courses;
+        if(count($coursesteacher) > 0){
+            
+            $data['message'] = "Found";
+            $data['status'] = 1;
+
+            foreach ($coursesteacher as $key => $courseteacher) {
+                $course = Course::find($courseteacher->course_id);
+                $data['course_info'][$key] = $course;
+            }
+            
+            return json_encode($data);
+        }
+
+        $data['message'] = "Not Found";
+        $data['status'] = 0;
         return json_encode($data);
+        
     }
 
 

@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\requests;
-use App\Studymaterial;
-use App\Http\Resources\Studymaterial as StudymaterialResource;
+use App\StudyMaterial;
+use App\Http\Resources\StudyMaterial as StudyMaterialResource;
 use App\Course;
 
 class StudyMaterialController extends Controller
@@ -45,14 +45,15 @@ class StudyMaterialController extends Controller
      */
     public function store(Request $request)
     {
-        $studymaterial = Studymaterial::where('id', $request->id)->first();
+        $studymaterial = StudyMaterial::where('course_id', $request->course_id)->where('file_name', $request->file('file')->getClientOriginalName())->first();
 
         if($studymaterial == null){
-            $studymaterial = new Studymaterial;
-            $studymaterial->file_name = $request->file_name;
+            $studymaterial = new StudyMaterial;
+            $path = $request->file('file')->store('uploads');
+            $studymaterial->file_path = "http://thebssesixth.com/spl2/storage/app/".$path;
+            $studymaterial->file_name = $request->file('file')->getClientOriginalName();
             $studymaterial->course_id = $request->course_id;
             $studymaterial->upload_date = $request->upload_date;
-            $studymaterial->remove_date = $request->remove_date;
 
             if($studymaterial->save()){
 
@@ -60,18 +61,13 @@ class StudyMaterialController extends Controller
                 $data['status'] = 1;
 
                 return json_encode($data);
-                
-
-            }
-            else{
-                
-                $data['message'] = "Not Inserted";
-                $data['status'] = 0;
-
-                return json_encode($data);
-
-            }
+            }            
         }
+
+        $data['message'] = "Not Inserted";
+        $data['status'] = 0;
+
+        return json_encode($data);
     }
 
     public function getFilesById(Request $request){
